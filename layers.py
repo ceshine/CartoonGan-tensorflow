@@ -4,7 +4,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Layer, InputSpec, DepthwiseConv2D
 from tensorflow.keras.layers import Conv2D, BatchNormalization, Add
 from tensorflow.keras.layers import ReLU, LeakyReLU, ZeroPadding2D
-from keras_contrib.layers import InstanceNormalization
+from tensorflow_addons.layers import InstanceNormalization
 
 
 def channel_shuffle_2(x):
@@ -212,7 +212,8 @@ class UpSampleConv(Model):
         super(UpSampleConv, self).build(input_shape)
 
     def call(self, x, training=False):
-        x = tf.keras.backend.resize_images(x, 2, 2, "channels_last", 'bilinear')
+        x = tf.keras.backend.resize_images(
+            x, 2, 2, "channels_last", 'bilinear')
         return self.model(x, training=training)
 
 

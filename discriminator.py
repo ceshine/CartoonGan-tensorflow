@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Conv2D, BatchNormalization, LeakyReLU
-from keras_contrib.layers import InstanceNormalization
+from tensorflow_addons.layers import InstanceNormalization
 from layers import ZeroPadding2D, ReflectionPadding2D, StridedConv
 
 

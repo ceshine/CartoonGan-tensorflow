@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import tensorflow as tf
-from keras_contrib.layers import InstanceNormalization
+from tensorflow_addons.layers import InstanceNormalization
 from tensorflow.keras.layers import Layer, InputSpec
 
 PRETRAINED_WEIGHT_DIR = os.path.join(
@@ -86,19 +86,23 @@ def load_model(style):
 
     # y = tf.keras.layers.ZeroPadding2D(padding=(1, 1))(y)
     y = ReflectionPadding2D(padding=(1, 1))(y)
-    y = conv_layer(style, "conv02_1", filters=128, kernel_size=3, strides=(2, 2))(y)
+    y = conv_layer(style, "conv02_1", filters=128,
+                   kernel_size=3, strides=(2, 2))(y)
     # y = tf.keras.layers.ZeroPadding2D(padding=(1, 1))(y)
     y = ReflectionPadding2D(padding=(1, 1))(y)
-    y = conv_layer(style, "conv02_2", filters=128, kernel_size=3, strides=(1, 1))(y)
+    y = conv_layer(style, "conv02_2", filters=128,
+                   kernel_size=3, strides=(1, 1))(y)
     y = instance_norm_layer(style, "in02_1")(y)
     y = tf.keras.layers.Activation("relu")(y)
 
     # y = tf.keras.layers.ZeroPadding2D(padding=(1, 1))(y)
     y = ReflectionPadding2D(padding=(1, 1))(y)
-    y = conv_layer(style, "conv03_1", filters=256, kernel_size=3, strides=(2, 2))(y)
+    y = conv_layer(style, "conv03_1", filters=256,
+                   kernel_size=3, strides=(2, 2))(y)
     # y = tf.keras.layers.ZeroPadding2D(padding=(1, 1))(y)
     y = ReflectionPadding2D(padding=(1, 1))(y)
-    y = conv_layer(style, "conv03_2", filters=256, kernel_size=3, strides=(1, 1))(y)
+    y = conv_layer(style, "conv03_2", filters=256,
+                   kernel_size=3, strides=(1, 1))(y)
     y = instance_norm_layer(style, "in03_1")(y)
 
     t_prev = tf.keras.layers.Activation("relu")(y)
@@ -119,7 +123,8 @@ def load_model(style):
         if i == 11:
             y = t_prev
 
-    layers = deconv_layers(style, "deconv01_1", filters=128, kernel_size=3, strides=(2, 2))
+    layers = deconv_layers(style, "deconv01_1", filters=128,
+                           kernel_size=3, strides=(2, 2))
     for layer in layers:
         y = layer(y)
     # y = tf.keras.layers.ZeroPadding2D(padding=(1, 1))(y)
@@ -128,7 +133,8 @@ def load_model(style):
     y = instance_norm_layer(style, "in12_1")(y)
     y = tf.keras.layers.Activation("relu")(y)
 
-    layers = deconv_layers(style, "deconv02_1", filters=64, kernel_size=3, strides=(2, 2))
+    layers = deconv_layers(style, "deconv02_1", filters=64,
+                           kernel_size=3, strides=(2, 2))
     for layer in layers:
         y = layer(y)
     # y = tf.keras.layers.ZeroPadding2D(padding=(1, 1))(y)
